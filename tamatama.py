@@ -79,7 +79,7 @@ class Application(tk.Tk):
             self.after(1000, self.reset_tamagotchi)
             self.feed_sound.play()
 
-        # Actualiza la etiqueta de hambre
+        # Update the hunger label every second
         self.update_hunger_label()
 
     def reset_tamagotchi(self):
