@@ -20,6 +20,7 @@ class Tamagotchi:
         return False
 
     def feed(self):
+
         # If Tamagotchi is hungry, it reduces the hunger level by 1
         if self.hunger > 0:
             self.hunger -= 1
@@ -32,29 +33,34 @@ class Application(tk.Tk):
     def __init__(self, tamagotchi):
         tk.Tk.__init__(self)
         self.tamagotchi = tamagotchi
-
+        self.title("Tamagotchi experiment")
 
         # Initialize the pygame mixer
         pygame.mixer.init()
 
+        self.character_name = ttk.Label(self, text="Tamatama")
+        self.character_name.pack()
 
         # Load the sound effects
-        self.feed_sound = pygame.mixer.Sound('sounds/feed_sound.wav')
-        self.death_sound = pygame.mixer.Sound('sounds/death_sound.wav')
+        self.feed_sound = pygame.mixer.Sound("sounds/feed_sound.wav")
+        self.death_sound = pygame.mixer.Sound("sounds/death_sound.wav")
 
-        # Normal Tamatama
-        self.character_label = tk.Label(self, text=
-        """
+        self.character_label = tk.Label(
+            self,
+            text="""
         ^ - ^
         ( o o )
         U   J
-        """)
+        """,
+        )
         self.character_label.pack()
 
         # Tamatama life bar
-        self.life_bar = ttk.Progressbar(self, length=100, mode='determinate', maximum=10)
+        self.life_bar = ttk.Progressbar(
+            self, length=100, mode="determinate", maximum=10
+        )
         self.life_bar.pack()
-        self.life_bar['value'] = self.tamagotchi.life
+        self.life_bar["value"] = self.tamagotchi.life
 
         # Tamatama hunger label
         self.hunger_label = tk.Label(self, text=f"Hunger: {self.tamagotchi.hunger}")
@@ -70,12 +76,13 @@ class Application(tk.Tk):
     def feed_tamagotchi(self):
         # Happy Tamatama
         if self.tamagotchi.feed():
-            self.character_label.config(text=
-            """
+            self.character_label.config(
+                text="""
             ^ - ^
             ( ^ ^ )
             U   J
-            """)
+            """
+            )
             self.after(1000, self.reset_tamagotchi)
             self.feed_sound.play()
 
@@ -83,12 +90,13 @@ class Application(tk.Tk):
         self.update_hunger_label()
 
     def reset_tamagotchi(self):
-        self.character_label.config(text=
-        """
+        self.character_label.config(
+            text="""
         ^ - ^
         ( o o )
         U   J
-        """)
+        """
+        )
 
     def update_hunger_label(self):
         # Update hunger label every second
@@ -98,15 +106,16 @@ class Application(tk.Tk):
     def update_life_bar(self):
         # Decrease life bar every 2 seconds
         if self.tamagotchi.decrease_life():
-            self.life_bar['value'] = self.tamagotchi.life
+            self.life_bar["value"] = self.tamagotchi.life
         else:
             # Sadly Tamatama it's d word
-            self.character_label.config(text=
-            """
+            self.character_label.config(
+                text="""
             ^ - ^
             ( x x )
             U   J
-            """)
+            """
+            )
         self.after(2000, self.update_life_bar)
         self.death_sound.play()
 
