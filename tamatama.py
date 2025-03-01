@@ -1,7 +1,6 @@
 import pygame
 import tkinter as tk
 import time
-
 from tkinter import ttk
 
 
@@ -13,14 +12,13 @@ class Tamagotchi:
         self.invulnerable = True
 
     def decrease_life(self):
-        # Decrese life in 1 point each 2 seconds
+        # Decrease life by 1 point every 2 seconds
         if self.life > 0:
             self.life -= 1
             return True
         return False
 
     def feed(self):
-
         # If Tamagotchi is hungry, it reduces the hunger level by 1
         if self.hunger > 0:
             self.hunger -= 1
@@ -108,7 +106,7 @@ class Application(tk.Tk):
         if self.tamagotchi.decrease_life():
             self.life_bar["value"] = self.tamagotchi.life
         else:
-            # Sadly Tamatama it's d word
+            # Sadly Tamatama is dead
             self.character_label.config(
                 text="""
             ^ - ^
@@ -122,9 +120,8 @@ class Application(tk.Tk):
 
 if __name__ == "__main__":
     my_tamagotchi = Tamagotchi()
-
     app = Application(my_tamagotchi)
 
-    # Exec
+    # Execute
     app.update_life_bar()
     app.mainloop()
